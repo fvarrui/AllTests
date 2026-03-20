@@ -1,0 +1,38 @@
+:root {
+  /* Fondos */
+  --bg:              #050f12;
+  --surface:         #0a1f26;
+  --surface2:        #0f2d36;
+  --border:          #164050;
+
+  /* Acentos */
+  --accent:          #2dd4bf;
+  --accent2:         #0ea5e9;
+
+  /* Semánticos */
+  --green:           #34d399;
+  --red:             #f87171;
+  --yellow:          #fbbf24;
+
+  /* Texto */
+  --text:            #e0f7f5;
+  --muted:           #5f8f90;
+
+  /* Forma */
+  --radius:          14px;
+
+  /* Gradiente del título h1 */
+  --h1-from:         #e0f7f5;
+
+  /* Fondo decorativo del menú/resultados */
+  --bg-glow-1:       #0d4f5a33;
+  --bg-glow-2:       #06415522;
+
+  /* Botones interactivos */
+  --btn-hover:       #0f3040;
+  --btn-selected:    #0a2530;
+
+  /* Respuestas */
+  --correct-bg:      #083d2e;
+  --wrong-bg:        #3d0f18;
+}
