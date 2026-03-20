@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AllTests — SCS</title>
+  <link id="appTheme" rel="stylesheet">
+  <script>
+    // Aplica el tema guardado de forma síncrona para evitar parpadeo
+    (function () {
+      const base   = new URL('../', window.location.href).href;
+      const saved  = localStorage.getItem('quizTheme');
+      const themes = [base + 'themes/default/dark.css', base + 'themes/default/light.css'];
+      document.getElementById('appTheme').href = themes.includes(saved) ? saved : themes[0];
+    })();
+  </script>
+  <link rel="stylesheet" href="../css/quiz.css">
+  <style>
+    /* ── HOME LAYOUT ── */
+    .home {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background: radial-gradient(ellipse at 60% 10%, var(--bg-glow-1) 0%, transparent 55%),
+                  radial-gradient(ellipse at 10% 80%, var(--bg-glow-2) 0%, transparent 50%),
+                  var(--bg);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 5rem 2rem 3rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      margin-bottom: 1rem;
+    }
+    .hero-desc {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 0;
+    }
+    .hero-desc strong { color: var(--text); }
+
+    /* ── QUIZZES GRID ── */
+    .quizzes-section {
+      flex: 1;
+      padding: 2rem;
+      max-width: 860px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .section-label {
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1.25rem;
+    }
+    .quizzes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ── QUIZ CARD ── */
+    .quiz-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+      transition: border-color .2s, transform .15s, box-shadow .2s;
+    }
+    .quiz-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+    }
+    .quiz-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .quiz-icon {
+      font-size: 2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .quiz-card-badge {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--btn-hover);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: .2rem .65rem;
+      white-space: nowrap;
+    }
+    .quiz-card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      line-height: 1.3;
+      margin: 0;
+      background: none;
+      -webkit-text-fill-color: var(--text);
+    }
+    .quiz-card-meta {
+      font-size: .82rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+    }
+    .quiz-card-meta .dot { opacity: .4; }
+    .quiz-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      padding-top: .5rem;
+      border-top: 1px solid var(--border);
+    }
+    .quiz-card-questions {
+      font-size: .8rem;
+      color: var(--muted);
+      font-family: 'DM Mono', monospace;
+    }
+    .quiz-card-cta {
+      font-size: .82rem;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* ── FOOTER ── */
+    .home > footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: .75rem;
+      padding: 1rem 1rem 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      .hero { padding: 4rem 1.5rem 2rem; }
+      .quizzes-section { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<button id="themeToggle" title="Cambiar tema"></button>
+
+<div class="home">
+
+  <div class="hero">
+    <div class="logo-badge">Servicio Canario de la Salud · 2022</div>
+    <h1>AllTests</h1>
+    <p class="hero-desc">
+      Entrenador de tests para <strong>oposiciones del SCS</strong>.<br>
+      Practica con el repertorio oficial de preguntas, elige cuántas responder,
+      en qué orden y cuándo ver la corrección.
+    </p>
+  </div>
+
+  <div class="quizzes-section">
+    <p class="section-label">Tests disponibles</p>
+    <div class="quizzes-grid" id="quizzesGrid">
+
+      <a class="quiz-card" href="Logopeda/">
+        <div class="quiz-card-header">
+          <span class="quiz-icon">🗣️</span>
+          <span class="quiz-card-badge">2022</span>
+        </div>
+        <h2>Logopeda</h2>
+        <div class="quiz-card-meta">
+          <span>SCS</span>
+          <span class="dot">·</span>
+          <span>Proceso Selectivo Estabilización</span>
+        </div>
+        <div class="quiz-card-footer">
+          <span class="quiz-card-questions">540 preguntas</span>
+          <span class="quiz-card-cta">Comenzar →</span>
+        </div>
+      </a>
+
+      <a class="quiz-card" href="AuxEnfermeria/">
+        <div class="quiz-card-header">
+          <span class="quiz-icon">🩺</span>
+          <span class="quiz-card-badge">2022</span>
+        </div>
+        <h2>Auxiliar de Enfermería</h2>
+        <div class="quiz-card-meta">
+          <span>SCS</span>
+          <span class="dot">·</span>
+          <span>Proceso Selectivo Estabilización</span>
+        </div>
+        <div class="quiz-card-footer">
+          <span class="quiz-card-questions">300 preguntas</span>
+          <span class="quiz-card-cta">Comenzar →</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>Made with ❤️ by @fvarrui</footer>
+
+</div>
+
+<script>
+  (function () {
+    const base   = new URL('../', window.location.href).href;
+    const themes = [
+      { file: base + 'themes/default/dark.css',  label: '🌙' },
+      { file: base + 'themes/default/light.css', label: '☀️' },
+    ];
+    const link = document.getElementById('appTheme');
+    const btn  = document.getElementById('themeToggle');
+
+    function currentIndex() {
+      const active = link.getAttribute('href');
+      const idx = themes.findIndex(t => t.file === active);
+      return idx >= 0 ? idx : 0;
+    }
+
+    function applyTheme(idx) {
+      link.href = themes[idx].file;
+      localStorage.setItem('quizTheme', themes[idx].file);
+      btn.textContent = themes[(idx + 1) % themes.length].label;
+    }
+
+    btn.addEventListener('click', () => applyTheme((currentIndex() + 1) % themes.length));
+    applyTheme(currentIndex());
+  })();
+</script>
+
+</body>
+</html>
