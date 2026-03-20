@@ -6,12 +6,11 @@
   <title>AllTests — SCS</title>
   <link id="appTheme" rel="stylesheet">
   <script>
-    // Aplica el tema guardado de forma síncrona para evitar parpadeo
+    // Aplica el modo claro/oscuro guardado de forma síncrona para evitar parpadeo
     (function () {
-      const base   = new URL('../', window.location.href).href;
-      const saved  = localStorage.getItem('quizTheme');
-      const themes = [base + 'themes/default/dark.css', base + 'themes/default/light.css'];
-      document.getElementById('appTheme').href = themes.includes(saved) ? saved : themes[0];
+      const mode = localStorage.getItem('quizThemeMode') || 'dark';
+      const base = new URL('../', window.location.href).href;
+      document.getElementById('appTheme').href = base + 'themes/default/' + mode + '.css';
     })();
   </script>
   <link rel="stylesheet" href="../css/quiz.css">
@@ -233,14 +232,12 @@
     const btn  = document.getElementById('themeToggle');
 
     function currentIndex() {
-      const active = link.getAttribute('href');
-      const idx = themes.findIndex(t => t.file === active);
-      return idx >= 0 ? idx : 0;
+      return localStorage.getItem('quizThemeMode') === 'light' ? 1 : 0;
     }
 
     function applyTheme(idx) {
       link.href = themes[idx].file;
-      localStorage.setItem('quizTheme', themes[idx].file);
+      localStorage.setItem('quizThemeMode', idx === 0 ? 'dark' : 'light');
       btn.textContent = themes[(idx + 1) % themes.length].label;
     }
 

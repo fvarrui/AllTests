@@ -23,9 +23,9 @@ const CONFIG = {
 
 };
 
-// Aplica el último tema guardado de forma síncrona (evita parpadeo al cargar).
-// Si no hay nada guardado, quiz.js aplicará el tema por defecto al arrancar.
+// Aplica el modo claro/oscuro guardado de forma síncrona (evita parpadeo al cargar).
 (function () {
-  const saved = localStorage.getItem('quizTheme');
-  if (saved) document.getElementById('appTheme').href = saved;
+  const mode = localStorage.getItem('quizThemeMode') || 'dark';
+  const root = document.currentScript.src.replace(/\/quizzes\/[^/]+\/[^/]+$/, '/');
+  document.getElementById('appTheme').href = root + 'themes/' + CONFIG.theme + '/' + mode + '.css';
 })();
